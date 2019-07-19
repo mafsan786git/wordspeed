@@ -968,7 +968,7 @@ function matchWords() {
 function showWord(word) {
 	//generate random array index
 	const randIndex = Math.floor(Math.random() * word.length);
-	currentWord.innerHTML = word[randIndex];
+	currentWord.innerHTML = word[randIndex].charAt(0).toUpperCase()+word[randIndex].slice(1);
 	return currentWord.innerHTML;
 }
 // Countdown timer
