@@ -802,7 +802,6 @@ const word = [
 	'fundamental',
 	'furthermore',
 	'highlighted',
-	'hypothesise',
 	'hypothesize',
 	'illustrated',
 	'immigration',
@@ -959,6 +958,8 @@ function startMatch() {
 function matchWords() {
 	if (wordInput.value === currentWord.innerHTML) {
 		message.innerHTML = 'Correct!!';
+		message.style.color = "green";
+
 		return true;
 	} else {
 		message.innerHTML = '';
@@ -968,7 +969,7 @@ function matchWords() {
 function showWord(word) {
 	//generate random array index
 	const randIndex = Math.floor(Math.random() * word.length);
-	currentWord.innerHTML = word[randIndex].charAt(0).toUpperCase()+word[randIndex].slice(1);
+	currentWord.innerHTML = word[randIndex].charAt(0).toUpperCase() + word[randIndex].slice(1);
 	return currentWord.innerHTML;
 }
 // Countdown timer
@@ -985,6 +986,7 @@ function countdown() {
 function checkStatus() {
 	if (!isPlaying && time === 0) {
 		message.innerHTML = 'Game Over';
+		message.style.color = "red";
 		score = -1;
 	}
 }
