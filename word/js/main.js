@@ -1,4 +1,5 @@
-window.addEventListener('load', init);
+
+//window.addEventListener('load', init);
 
 //globals
 // const levels = {
@@ -7,7 +8,8 @@ window.addEventListener('load', init);
 // 	hard: 2,
 // };
 // const currentLevel = levels.easy;
-
+var alertbox = document.createElement('div');
+	alertbox.className='container bg-danger';
 let time;
 let score = 0;
 let isPlaying;
@@ -18,93 +20,13 @@ const currentWord = document.querySelector('#current-word');
 const scoreDisplay = document.querySelector('#score');
 const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
-const seconds = document.querySelector('#seconds');
-
+const highestscore = document.querySelector('#hscore');
+var t;
+var gamealert;
+var hscore = 0;
+highestscore.innerHTML=localStorage.getItem('score');
 //array of words 872 length
 const word = [
-	'so',
-	'aid',
-	'for',
-	'job',
-	'key',
-	'may',
-	'odd',
-	'set',
-	'sex',
-	'sum',
-	'use',
-	'via',
-	'area',
-	'bias',
-	'body',
-	'bond',
-	'bulk',
-	'cite',
-	'clue',
-	'code',
-	'copy',
-	'core',
-	'data',
-	'deny',
-	'draw',
-	'edit',
-	'fact',
-	'fees',
-	'file',
-	'form',
-	'levy',
-	'link',
-	'list',
-	'main',
-	'mean',
-	'mode',
-	'more',
-	'note',
-	'pace',
-	'plan',
-	'plot',
-	'plus',
-	'rank',
-	'rare',
-	'role',
-	'root',
-	'rule',
-	'scan',
-	'show',
-	'site',
-	'skim',
-	'task',
-	'team',
-	'term',
-	'test',
-	'text',
-	'tone',
-	'vary',
-	'view',
-	'alter',
-	'apply',
-	'argue',
-	'aware',
-	'brief',
-	'Burke',
-	'cause',
-	'chart',
-	'cited',
-	'civil',
-	'claim',
-	'class',
-	'cycle',
-	'draft',
-	'equal',
-	'error',
-	'essay',
-	'event',
-	'final',
-	'focus',
-	'frame',
-	'funds',
-	'genre',
-	'goals',
 	'grade',
 	'graph',
 	'hence',
@@ -198,6 +120,33 @@ const word = [
 	'ensure',
 	'estate',
 	'ethnic',
+	'accommodation',
+	'automatically',
+	'circumstances',
+	'communication',
+	'comprehensive',
+	'concentration',
+	'contradiction',
+	'corresponding',
+	'differentiate',
+	'investigation',
+	'justification',
+	'participation',
+	'practitioners',
+	'predominantly',
+	'supplementary',
+	'administration',
+	'characteristic',
+	'constitutional',
+	'discrimination',
+	'implementation',
+	'infrastructure',
+	'interpretation',
+	'transformation',
+	'transporttrend',
+	'differentiation',
+	'notwithstanding',
+	'straightforward',
 	'exceed',
 	'expert',
 	'export',
@@ -279,62 +228,6 @@ const word = [
 	'abandon',
 	'achieve',
 	'acronym',
-	'address',
-	'analogy',
-	'analyse',
-	'analyze',
-	'arrange',
-	'aspects',
-	'benefit',
-	'capable',
-	'caption',
-	'channel',
-	'chapter',
-	'clarify',
-	'compare',
-	'compile',
-	'complex',
-	'compose',
-	'concept',
-	'concise',
-	'conduct',
-	'confirm',
-	'consent',
-	'consist',
-	'consult',
-	'contact',
-	'contend',
-	'context',
-	'control',
-	'convert',
-	'crucial',
-	'decades',
-	'decline',
-	'derived',
-	'despite',
-	'develop',
-	'devoted',
-	'diction',
-	'discuss',
-	'display',
-	'dynamic',
-	'edition',
-	'emerged',
-	'erosion',
-	'ethical',
-	'examine',
-	'example',
-	'excerpt',
-	'exclude',
-	'exhibit',
-	'explain',
-	'explore',
-	'extract',
-	'factors',
-	'feature',
-	'federal',
-	'formula',
-	'founded',
 	'general',
 	'granted',
 	'graphic',
@@ -829,6 +722,62 @@ const word = [
 	'sustainable',
 	'termination',
 	'traditional',
+	'address',
+	'analogy',
+	'analyse',
+	'analyze',
+	'arrange',
+	'aspects',
+	'benefit',
+	'capable',
+	'caption',
+	'channel',
+	'chapter',
+	'clarify',
+	'compare',
+	'compile',
+	'complex',
+	'compose',
+	'concept',
+	'concise',
+	'conduct',
+	'confirm',
+	'consent',
+	'consist',
+	'consult',
+	'contact',
+	'contend',
+	'context',
+	'control',
+	'convert',
+	'crucial',
+	'decades',
+	'decline',
+	'derived',
+	'despite',
+	'develop',
+	'devoted',
+	'diction',
+	'discuss',
+	'display',
+	'dynamic',
+	'edition',
+	'emerged',
+	'erosion',
+	'ethical',
+	'examine',
+	'example',
+	'excerpt',
+	'exclude',
+	'exhibit',
+	'explain',
+	'explore',
+	'extract',
+	'factors',
+	'feature',
+	'federal',
+	'formula',
+	'founded',
 	'accumulation',
 	'acknowledged',
 	'appreciation',
@@ -866,61 +815,154 @@ const word = [
 	'significance',
 	'substitution',
 	'transmission',
-	'accommodation',
-	'automatically',
-	'circumstances',
-	'communication',
-	'comprehensive',
-	'concentration',
-	'contradiction',
-	'corresponding',
-	'differentiate',
-	'investigation',
-	'justification',
-	'participation',
-	'practitioners',
-	'predominantly',
-	'supplementary',
-	'administration',
-	'characteristic',
-	'constitutional',
-	'discrimination',
-	'implementation',
-	'infrastructure',
-	'interpretation',
-	'transformation',
-	'transporttrend',
-	'differentiation',
-	'notwithstanding',
-	'straightforward',
+	'so',
+	'aid',
+	'for',
+	'job',
+	'key',
+	'may',
+	'odd',
+	'set',
+	'sex',
+	'sum',
+	'use',
+	'via',
+	'area',
+	'bias',
+	'body',
+	'bond',
+	'bulk',
+	'cite',
+	'clue',
+	'code',
+	'copy',
+	'core',
+	'data',
+	'deny',
+	'draw',
+	'edit',
+	'fact',
+	'fees',
+	'file',
+	'form',
+	'levy',
+	'link',
+	'list',
+	'main',
+	'mean',
+	'mode',
+	'more',
+	'note',
+	'pace',
+	'plan',
+	'plot',
+	'plus',
+	'rank',
+	'rare',
+	'role',
+	'root',
+	'rule',
+	'scan',
+	'show',
+	'site',
+	'skim',
+	'task',
+	'team',
+	'term',
+	'test',
+	'text',
+	'tone',
+	'vary',
+	'view',
+	'alter',
+	'apply',
+	'argue',
+	'aware',
+	'brief',
+	'Burke',
+	'cause',
+	'chart',
+	'cited',
+	'civil',
+	'claim',
+	'class',
+	'cycle',
+	'draft',
+	'equal',
+	'error',
+	'essay',
+	'event',
+	'final',
+	'focus',
+	'frame',
+	'funds',
+	'genre',
+	'goals'
 ];
 
 //initialize game
-
+const start = document.getElementById('play');
+start.addEventListener('click',init);
+// console.log('init fuction is going to execute');
 function init() {
 	// Show number of seconds in UI
 	// seconds.innerHTML = currentLevel;
+	wordInput.value='';
+	gamealert= true;
+	clearInterval(t);
+	timeDisplay.innerHTML=0;
+	message.innerHTML='';
+	scoreDisplay.innerHTML = score;
 	let wrd = showWord(word);
 	if (wrd.length < 5) {
-		seconds.innerHTML = 2;
+		//seconds.innerHTML = 2;
 		time = 2 + 1;
 	} else if (wrd.length >= 5 && wrd.length < 9) {
-		seconds.innerHTML = 3;
+		//seconds.innerHTML = 3;
 		time = 3 + 1;
 	} else if (wrd.length >= 9 && wrd.length < 13) {
-		seconds.innerHTML = 4;
+		//seconds.innerHTML = 4;
 		time = 4 + 1;
 	} else if (wrd.length >= 13 && wrd.length < 16) {
-		seconds.innerHTML = 5;
+		//seconds.innerHTML = 5;
 		time = 5 + 1;
 	}
 	// Load word from array
-	//
+	
+	wordInput.focus();
 	//start matching from input
-	wordInput.addEventListener('input', startMatch);
-
+	wordInput.addEventListener('input', (event) => {
+		
+		if (!gamealert && time == 0) {
+		 event.preventDefault();
+		  displayWarning('press start to play again');
+		  
+		}else{
+			startMatch();
+		}
+	});
+	
+	//alertbox.id='newchild';
+	var alertboxout;
+	function displayWarning(msg)
+	{
+		alertbox.innerHTML=msg;
+		// if (document.body.contains(alertbox)) {
+		// 	clearTimeout(alertboxout);
+		// }else{
+			wordInput.parentNode.insertBefore(alertbox,wordInput.nextSibling);
+		
+		
+		alertboxout =setTimeout(()=>{
+			alertbox.parentNode.removeChild(alertbox);
+			//alert('remove chiled');
+			alertboxout = -1;
+		},1000);
+		wordInput.value='';
+	}
+	//keypress
 	// Call countdown every second
-	setInterval(countdown, 1000);
+	t=setInterval(countdown, 1000);
 	// Check game status
 	setInterval(checkStatus, 50);
 }
@@ -932,33 +974,34 @@ function startMatch() {
 		let wrd = showWord(word);
 
 		if (wrd.length < 5) {
-			seconds.innerHTML = 2;
-			time = 2 + 1;
+			//seconds.innerHTML = 2;
+			time = 2 ;
 		} else if (wrd.length >= 5 && wrd.length < 9) {
-			seconds.innerHTML = 3;
-			time = 3 + 1;
+			//seconds.innerHTML = 3;
+			time = 3 ;
 		} else if (wrd.length >= 9 && wrd.length < 13) {
-			seconds.innerHTML = 4;
-			time = 4 + 1;
+			//seconds.innerHTML = 4;
+			time = 4 ;
 		} else if (wrd.length >= 13 && wrd.length < 16) {
-			seconds.innerHTML = 5;
-			time = 5 + 1;
+			//seconds.innerHTML = 5;
+			time = 5;
 		}
 
 		wordInput.value = '';
 		score++;
 	}
 	// If score is -1, display 0
-	if (score === -1) {
-		scoreDisplay.innerHTML = 0;
-	} else {
+	
+	// if (score === -1) {
+	// 	scoreDisplay.innerHTML = 0;
+	// } else {
 		scoreDisplay.innerHTML = score;
-	}
+	
 }
 function matchWords() {
 	if (wordInput.value === currentWord.innerHTML) {
 		message.innerHTML = 'Correct!!';
-		message.style.color = "green";
+		message.style.backgroundColor = "green";
 
 		return true;
 	} else {
@@ -972,12 +1015,15 @@ function showWord(word) {
 	currentWord.innerHTML = word[randIndex].charAt(0).toUpperCase() + word[randIndex].slice(1);
 	return currentWord.innerHTML;
 }
+//
 // Countdown timer
 function countdown() {
 	if (time > 0) {
 		time--;
 	} else if (time === 0) {
+		gamealert = false;
 		isPlaying = false;
+		
 	}
 	timeDisplay.innerHTML = time;
 }
@@ -986,7 +1032,13 @@ function countdown() {
 function checkStatus() {
 	if (!isPlaying && time === 0) {
 		message.innerHTML = 'Game Over';
-		message.style.color = "red";
-		score = -1;
+		message.style.backgroundColor = "red";
+		if (localStorage.getItem('score') < score) {
+			//hscore=score;
+			localStorage.setItem('score',score);
+			
+		}
+		highestscore.innerHTML=localStorage.getItem('score');
+		score = 0;
 	}
 }
