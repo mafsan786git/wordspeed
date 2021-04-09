@@ -9,7 +9,7 @@
 // };
 // const currentLevel = levels.easy;
 var alertbox = document.createElement('div');
-	alertbox.className='container bg-danger';
+alertbox.className = 'container bg-danger';
 let time;
 let score = 0;
 let isPlaying;
@@ -24,7 +24,7 @@ const highestscore = document.querySelector('#hscore');
 var t;
 var gamealert;
 var hscore = 0;
-highestscore.innerHTML=localStorage.getItem('score');
+highestscore.innerHTML = localStorage.getItem('score');
 //array of words 872 length
 const word = [
 	'grade',
@@ -902,16 +902,16 @@ const word = [
 
 //initialize game
 const start = document.getElementById('play');
-start.addEventListener('click',init);
+start.addEventListener('click', init);
 // console.log('init fuction is going to execute');
 function init() {
 	// Show number of seconds in UI
 	// seconds.innerHTML = currentLevel;
-	wordInput.value='';
-	gamealert= true;
+	wordInput.value = '';
+	gamealert = true;
 	clearInterval(t);
-	timeDisplay.innerHTML=0;
-	message.innerHTML='';
+	timeDisplay.innerHTML = 0;
+	message.innerHTML = '';
 	scoreDisplay.innerHTML = score;
 	let wrd = showWord(word);
 	if (wrd.length < 5) {
@@ -928,41 +928,40 @@ function init() {
 		time = 5 + 1;
 	}
 	// Load word from array
-	
+
 	wordInput.focus();
 	//start matching from input
 	wordInput.addEventListener('input', (event) => {
-		
+
 		if (!gamealert && time == 0) {
-		 event.preventDefault();
-		  displayWarning('press start to play again');
-		  
-		}else{
+			event.preventDefault();
+			displayWarning('press start to play again');
+
+		} else {
 			startMatch();
 		}
 	});
-	
+
 	//alertbox.id='newchild';
 	var alertboxout;
-	function displayWarning(msg)
-	{
-		alertbox.innerHTML=msg;
+	function displayWarning(msg) {
+		alertbox.innerHTML = msg;
 		// if (document.body.contains(alertbox)) {
 		// 	clearTimeout(alertboxout);
 		// }else{
-			wordInput.parentNode.insertBefore(alertbox,wordInput.nextSibling);
-		
-		
-		alertboxout =setTimeout(()=>{
+		wordInput.parentNode.insertBefore(alertbox, wordInput.nextSibling);
+
+
+		alertboxout = setTimeout(() => {
 			alertbox.parentNode.removeChild(alertbox);
 			//alert('remove chiled');
 			alertboxout = -1;
-		},1000);
-		wordInput.value='';
+		}, 1000);
+		wordInput.value = '';
 	}
 	//keypress
 	// Call countdown every second
-	t=setInterval(countdown, 1000);
+	t = setInterval(countdown, 1000);
 	// Check game status
 	setInterval(checkStatus, 50);
 }
@@ -975,13 +974,13 @@ function startMatch() {
 
 		if (wrd.length < 5) {
 			//seconds.innerHTML = 2;
-			time = 2 ;
+			time = 2;
 		} else if (wrd.length >= 5 && wrd.length < 9) {
 			//seconds.innerHTML = 3;
-			time = 3 ;
+			time = 3;
 		} else if (wrd.length >= 9 && wrd.length < 13) {
 			//seconds.innerHTML = 4;
-			time = 4 ;
+			time = 4;
 		} else if (wrd.length >= 13 && wrd.length < 16) {
 			//seconds.innerHTML = 5;
 			time = 5;
@@ -991,15 +990,18 @@ function startMatch() {
 		score++;
 	}
 	// If score is -1, display 0
-	
+
 	// if (score === -1) {
 	// 	scoreDisplay.innerHTML = 0;
 	// } else {
-		scoreDisplay.innerHTML = score;
-	
+	scoreDisplay.innerHTML = score;
+
 }
 function matchWords() {
-	if (wordInput.value === currentWord.innerHTML) {
+
+	let str = wordInput.value;
+
+	if (str.replace(/\s+/g, '') === currentWord.innerHTML) {
 		message.innerHTML = 'Correct!!';
 		message.style.backgroundColor = "green";
 
@@ -1023,7 +1025,7 @@ function countdown() {
 	} else if (time === 0) {
 		gamealert = false;
 		isPlaying = false;
-		
+
 	}
 	timeDisplay.innerHTML = time;
 }
@@ -1035,10 +1037,10 @@ function checkStatus() {
 		message.style.backgroundColor = "red";
 		if (localStorage.getItem('score') < score) {
 			//hscore=score;
-			localStorage.setItem('score',score);
-			
+			localStorage.setItem('score', score);
+
 		}
-		highestscore.innerHTML=localStorage.getItem('score');
+		highestscore.innerHTML = localStorage.getItem('score');
 		score = 0;
 	}
 }
